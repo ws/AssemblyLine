@@ -10,13 +10,13 @@ AssemblyLine provides an incredibly simple way to create a Twitter bot in Node. 
 
 ### Setup
 
-    var AssemblyLine = require('AssemblyLine');
+    var AssemblyLine = require('AssemblyLine')
     var bot = new AssemblyLine({
 	    consumerKey: '<consumer key>',
     	consumerSecret: '<consumer secret>',
     	accessToken: '<access token>',
     	accessTokenSecret: '<access token secret>'
-    });
+    })
 
 Make sure to fill in the information from the Twitter API Developer Console.
 
@@ -48,18 +48,18 @@ When this is called the bot will begin monitoring tweets with the specified filt
 
 No, really. It's that easy. A finished application will look something like this: 
 
-    var AssemblyLine = require('AssemblyLine');
+    var AssemblyLine = require('AssemblyLine')
     var bot = new AssemblyLine({
 	    consumerKey: '<consumer key>',
     	consumerSecret: '<consumer secret>',
 	    accessToken: '<access token>',
     	accessTokenSecret: '<access token secret>'
-    });
+    })
 
-    bot.addKeywordFilter('AssemblyLine');
+    bot.addKeywordFilter('AssemblyLine')
     bot.start(function(tweet) {
-	    return '@' + tweet.user.screen_name + ' AssemblyLine is really cool!';
-    });
+	    return '@' + tweet.user.screen_name + ' AssemblyLine is really cool!'
+    })
 
 This basic bot just sends an @reply to anybody who mentions AssemblyLine in their tweet with the message "AssemblyLine is really cool!"
 

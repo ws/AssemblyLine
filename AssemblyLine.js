@@ -1,77 +1,77 @@
-var Twit = require('twit');
+var Twit = require('twit')
 
 var AssemblyLine = function(options) {
 	this.filters = {
 		follow: [],
 		track: [],
 		locations: []
-	};
+	}
 	this.T = new Twit({
 		consumer_key: options.consumerKey,
 		consumer_secret: options.consumerSecret,
 		access_token: options.accessToken,
 		access_token_secret: options.accessTokenSecret
-	});
+	})
 }
 
 AssemblyLine.prototype = {
 	addUserFilter: function(userId) {
-		this.filters.follow.push(userId);
-		this.restart();
+		this.filters.follow.push(userId)
+		this.restart()
 	},
 	addKeywordFilter: function(keyword) {
-		this.filters.track.push(keyword);
-		this.restart();
+		this.filters.track.push(keyword)
+		this.restart()
 	},
 	addLocationFilter: function(location) {
-		this.filters.locations.push(location);
-		this.restart();
+		this.filters.locations.push(location)
+		this.restart()
 	},
 	clearFilters: function() {
-		this.filters.follow = [];
-		this.filters.track = [];
-		this.filters.locations = [];
-		this.restart();
+		this.filters.follow = []
+		this.filters.track = []
+		this.filters.locations = []
+		this.restart()
 	},
 	start: function(callback) {
-		this.callback = callback;
-		this.restart();
+		this.callback = callback
+		this.restart()
 	},
 	restart: function() {
 		if (!this.callback) {
-			return;
+			return
 		}
 
-		var filter = {};
+		var filter = {}
 		if(this.filters.follow.length > 0) {
-			filter.follow = this.filters.follow.join(',');
+			filter.follow = this.filters.follow.join(',')
 		}
 		if (this.filters.track.length > 0) {
-			filter.track = this.filters.track.join(',');
+			filter.track = this.filters.track.join(',')
 		}
 		if (this.filters.locations.length > 0) {
-			filter.locations = this.filters.locations.join(',');
+			filter.locations = this.filters.locations.join(',')
 		}
 
-		this.stream = this.T.stream('statuses/filter', filter);
+		this.stream = this.T.stream('statuses/filter', filter)
 
 		//TODO: There's probably a better way to do this...
-		var prototype = this;
+		var prototype = this
 		this.stream.on('tweet', function(tweet) {
-			var response = prototype.callback(tweet);
-			prototype.tweet(response, tweet.id_str);
-		});
+			var response = prototype.callback(tweet)
+			prototype.tweet(response, tweet.id_str)
+		})
 	},
 	tweet: function(text, inResponseTo) {
 		this.T.post('statuses/update', {status: text, in_reply_to_status_id: inResponseTo}, function(error) {
 			if (error) {
-				console.log('Could not post tweet: \'' + text + '\'');
-				console.log('Reason: ' + error.message);
+				console.log('Could not post tweet: \'' + text + '\'')
+				console.log('Reason: ' + error.message)
 			} else {
-				console.log('Posted tweet: \'' + text + '\'');
+				console.log('Posted tweet: \'' + text + '\'')
 			}
-		});
+		})
 	}
 }
 
-module.exports = AssemblyLine;
+module.exports = AssemblyLine
