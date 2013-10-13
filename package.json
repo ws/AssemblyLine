@@ -1,0 +1,11 @@
+{
+  "name": "AssemblyLine",
+  "version": "0.0.1",
+  "description": "A simple way to create an automated Twitter bot.",
+  "main": "AssemblyLine.js",
+  "author": "Lenny Khazan <lenny.khazan@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "twit": ">=1.1.11"
+  }
+}
