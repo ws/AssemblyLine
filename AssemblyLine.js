@@ -1,4 +1,5 @@
 var Twit = require('twit')
+var _ = require('lodash')
 
 var AssemblyLine = function(options) {
 	this.filters = {
@@ -38,20 +39,12 @@ AssemblyLine.prototype = {
 		this.restart()
 	},
 	restart: function() {
-		if (!this.callback) {
-			return
-		}
+		if (!this.callback) return
 
 		var filter = {}
-		if(this.filters.follow.length > 0) {
-			filter.follow = this.filters.follow.join(',')
-		}
-		if (this.filters.track.length > 0) {
-			filter.track = this.filters.track.join(',')
-		}
-		if (this.filters.locations.length > 0) {
-			filter.locations = this.filters.locations.join(',')
-		}
+		if(this.filters.follow.length > 0) filter.follow = this.filters.follow.join(',')
+		if (this.filters.track.length > 0) filter.track = this.filters.track.join(',')
+		if (this.filters.locations.length > 0) filter.locations = this.filters.locations.join(',')
 
 		this.stream = this.T.stream('statuses/filter', filter)
 
